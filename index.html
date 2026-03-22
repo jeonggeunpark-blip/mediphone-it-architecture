@@ -32,7 +32,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 헤더: 그림자 제거, 깔끔한 실선 구분 */
+/* 헤더 */
 header {
   background: var(--surface);
   border-bottom: 1px solid var(--line);
@@ -42,18 +42,23 @@ header {
 header h1 {
   margin: 0;
   font-size: 26px;
-  line-height: 1.4;
+  line-height: 1.5; /* 줄바꿈 시 간격 조정 */
   letter-spacing: -0.02em;
   font-weight: 700;
 }
 header .sub {
-  margin-top: 12px;
+  margin-top: 16px;
   color: var(--text-soft);
   font-size: 14px;
   font-weight: 500;
 }
+/* 두 번째 줄 하이라이트 간격 최적화 */
+.highlight-wrap {
+  display: inline-block;
+  margin-top: 4px;
+}
 
-/* 네비게이션: 그림자 제거, 차분한 전환 */
+/* 네비게이션 */
 nav {
   position: sticky;
   top: 0;
@@ -95,7 +100,6 @@ nav button.active {
   margin: 0 auto;
   padding: 40px 24px 60px;
 }
-/* 화려한 fadeIn 애니메이션 제거, 즉각적인 전환으로 문서 느낌 강조 */
 .section.active { display: block; }
 
 h2 {
@@ -118,7 +122,7 @@ h2::before {
   background-color: var(--primary);
 }
 
-/* 알림 박스: 웹 알림창 느낌을 줄이고 사내 메모/주의사항 포맷으로 변경 */
+/* 알림 박스 */
 .notice-box {
   background-color: var(--surface);
   border: 1px solid var(--line);
@@ -150,7 +154,7 @@ h2::before {
   font-size: 15px;
 }
 
-/* 카드: 떠오르는 애니메이션 및 그림자 제거, 플랫한 디자인 */
+/* 카드 */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -171,7 +175,6 @@ h2::before {
 }
 .mini-card p { margin: 0; color: var(--text-soft); font-size: 14px; line-height: 1.5; }
 
-/* 튀는 형광펜 그라데이션 제거, 차분한 배경색 강조로 변경 */
 .highlight { 
   font-weight: 700; 
   background-color: var(--primary-soft);
@@ -181,95 +184,101 @@ h2::before {
 .small { font-size: 13px; color: var(--text-soft); display: block; margin-top: 4px; font-weight: normal; }
 
 
-/* 아키텍처 다이어그램 */
-.arch{
-  display:flex;
-  gap:20px;
+/* 아키텍처 다이어그램 (모달 방식으로 변경) */
+.arch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.left,.right{flex:1}
-.box{
-  border:1px solid var(--line);
-  padding:14px;
-  text-align:center;
-  margin:6px 0;
-  cursor:pointer;
+.arch-container {
+  width: 100%;
+  max-width: 500px; /* 데스크탑에서도 너무 퍼지지 않게 중앙 정렬 */
+}
+.box {
+  border: 1px solid var(--line);
+  padding: 14px;
+  text-align: center;
+  margin: 6px 0;
+  cursor: pointer;
   background: var(--surface);
   color: var(--text);
   font-size: 15px;
   font-weight: 700;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 .box:hover,
-.box.active{
+.box.active {
   border-color: var(--primary);
   background: var(--primary-soft);
 }
-.box.retry{
+.box.retry {
   border-color: var(--warn-line);
 }
 .box.retry:hover,
-.box.retry.active{
+.box.retry.active {
   background: var(--warn-bg);
 }
-.arrow{text-align:center;color:#9ca3af}
-#info{
-  border-left:3px solid var(--primary);
-  padding-left:12px;
-  background: var(--surface);
+.arrow { text-align: center; color: #9ca3af; margin: 4px 0; }
+
+.arch-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
-#info h3{
-  margin: 0 0 12px;
-  font-size: 18px;
-  color: var(--text);
-}
-#info p{
-  margin: 0 0 16px;
-  color: var(--text-soft);
-  font-size: 14px;
-  line-height: 1.6;
-}
-#info ul{
-  margin: 0;
-  padding-left: 20px;
-  color: var(--text);
-}
-#info li{
-  margin-bottom: 8px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-.arch-pair{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.arch-caption{
-  text-align:center;
+.arch-caption {
+  text-align: center;
   color: var(--text-soft);
   font-size: 13px;
   margin: 8px 0 4px;
 }
-.table-wrap{
-  overflow-x:auto;
-  border:1px solid var(--line);
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:600px;
-}
-th,td{
-  border-bottom:1px solid var(--line);
-  padding:12px;
-  font-size:14px;
-}
-th{background:#f9fafb}
-td { border-right: 1px solid var(--line); }
-td:last-child { border-right: none; }
-@media(max-width:768px){
-  .arch{flex-direction:column}
-  .arch-pair{grid-template-columns:1fr;}
-}
 
+/* 모달 스타일 추가 */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(15, 23, 42, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+.modal-content {
+  background: var(--surface);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-top: 4px solid var(--primary);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+.modal-overlay.show .modal-content {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: none; border: none;
+  font-size: 24px; line-height: 1;
+  color: var(--line-strong);
+  cursor: pointer;
+  padding: 0; margin: 0;
+}
+.modal-close:hover { color: var(--text); }
+
+#modal-title { margin: 0 0 12px; font-size: 20px; color: var(--text); }
+#modal-desc { margin: 0 0 16px; color: var(--text-soft); font-size: 15px; line-height: 1.6; }
+#modal-points { margin: 0; padding-left: 20px; color: var(--text); }
+#modal-points li { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
 
 /* 테이블 */
 .table-wrap {
@@ -313,15 +322,18 @@ body.private .secret-note { display: block; }
 body.jp .ko { display: none !important; }
 body.ko .jp { display: none !important; }
 
+/* 모바일 반응형 처리 */
 @media (max-width: 600px) {
   header { padding: 24px 16px 16px; }
-  header h1 { font-size: 20px; }
+  header h1 { font-size: 22px; }
   .section { padding: 24px 16px 40px; }
   h2 { font-size: 18px; }
   .card-grid { grid-template-columns: 1fr; gap: 12px; }
-  .arch-split, .arch-support { grid-template-columns: 1fr; gap: 8px; }
-  .arch-panel { padding: 20px 16px; }
-  nav button { padding: 14px 16px; font-size: 14px; }
+  .arch-pair { grid-template-columns: 1fr; gap: 8px; }
+  
+  /* 모바일 탭 최적화: 여백과 폰트 크기 축소 */
+  nav button { padding: 12px 12px; font-size: 14px; }
+  
   .notice-box { font-size: 14px; padding: 12px 16px; }
   .summary { padding: 12px 16px; font-size: 14px; }
 }
@@ -330,8 +342,8 @@ body.ko .jp { display: none !important; }
 <body class="jp">
 <header>
   <h1>
-    <span class="jp">メディフォン株式会社 <span class="highlight">社内SE 応募参考資料</span></span>
-    <span class="ko">메디폰 주식회사 <span class="highlight">사내 SE 지원 참고자료</span></span>
+    <span class="jp">メディフォン株式会社<br><span class="highlight highlight-wrap">社内SE 応募参考資料</span></span>
+    <span class="ko">메디폰 주식회사<br><span class="highlight highlight-wrap">사내 SE 지원 참고자료</span></span>
   </h1>
   <div class="sub">
     <span class="jp">【フレックス】社内SE（セキュリティ・オフィス環境構築／急成長中の医療ヘルスケアSaaS）</span>
@@ -396,8 +408,8 @@ body.ko .jp { display: none !important; }
   </p>
   
   <div class="arch">
-    <div class="left">
-      <div class="box active" onclick="showInfo('smarthr', this)">SmartHR<br><span class="small"><span class="jp">人情報の原本</span><span class="ko">사람 정보 원본</span></span></div>
+    <div class="arch-container">
+      <div class="box" onclick="showInfo('smarthr', this)">SmartHR<br><span class="small"><span class="jp">人情報の原本</span><span class="ko">사람 정보 원본</span></span></div>
       <div class="arrow">↓</div>
       <div class="box" onclick="showInfo('gas', this)">GAS<br><span class="small"><span class="jp">自動処理エンジン</span><span class="ko">자동 처리 엔진</span></span></div>
       <div class="arrow">↓</div>
@@ -414,21 +426,8 @@ body.ko .jp { display: none !important; }
         <div class="box" onclick="showInfo('github', this)">GitHub<br><span class="small"><span class="jp">変更統制</span><span class="ko">변경 통제</span></span></div>
       </div>
     </div>
-    <div class="right" id="info">
-      <h3 id="info-title">SmartHR</h3>
-      <p id="info-desc">人情報の原本です。入社・退職・異動などの変化はここを起点に管理します。</p>
-      <ul id="info-points">
-        <li>アカウント作成・停止の判断基準を一本化できます。</li>
-        <li>人手によるばらつきを減らし、運用説明もしやすくなります。</li>
-      </ul>
-      <div class="secret-note">
-        <strong><span class="jp">個人メモ</span><span class="ko">개인 메모</span></strong>
-        <div><span class="jp">説明時は「人情報の正本管理」を起点に話すと流れが安定する。</span><span class="ko">설명할 때는 “사람 정보의 정본 관리”를 출발점으로 말하면 흐름이 안정적.</span></div>
-      </div>
-    </div>
   </div>
 </section>
-
 
 <section id="compare" class="section">
   <h2><span class="jp">導入の考え方</span><span class="ko">도입 방향</span></h2>
@@ -558,6 +557,20 @@ body.ko .jp { display: none !important; }
   </div>
 </section>
 
+<div id="infoModal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+    <ul id="modal-points"></ul>
+    
+    <div id="modal-secret" class="secret-note">
+      <strong><span class="jp">個人メモ</span><span class="ko">개인 메모</span></strong>
+      <div id="modal-secret-text"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const infoData = {
   smarthr: {
@@ -572,7 +585,9 @@ const infoData = {
     ko_points: [
       '계정 생성·중지 판단 기준을 하나로 통일할 수 있습니다.',
       '사람마다 다르게 처리되는 편차를 줄이고 설명도 쉬워집니다.'
-    ]
+    ],
+    jp_secret: '説明時は「人情報の正本管理」を起点に話すと流れが安定する。',
+    ko_secret: '설명할 때는 “사람 정보의 정본 관리”를 출발점으로 말하면 흐름이 안정적.'
   },
   gas: {
     jp_title: 'GAS', ko_title: 'GAS',
@@ -599,7 +614,7 @@ const infoData = {
     jp_title: 'freee / HRMOS', ko_title: 'freee / HRMOS',
     jp_desc: '完全自動化が難しい場面が残る SaaS です。運用タスクとして切り出す前提が必要です。',
     ko_desc: '완전 자동화가 어려운 장면이 남는 SaaS입니다. 운영 태스크로 분리하는 전제가 필요합니다.',
-    jp_points: ['例外を無理に自動化せず、誰가処理したかを残します。', '自動化できない部分も統制対象として管理できます。'],
+    jp_points: ['例外を無理に自動化せず、誰が処理したかを残します。', '自動化できない部分も統制対象として管理できます。'],
     ko_points: ['예외를 무리하게 자동화하지 않고, 누가 처리했는지 남깁니다.', '자동화되지 않는 부분도 통제 대상 안에서 관리할 수 있습니다.']
   },
   bq: {
@@ -623,19 +638,50 @@ function currentLang() {
 }
 
 function showInfo(key, el) {
+  // 박스 활성화 스타일 처리
   document.querySelectorAll('.box').forEach(btn => btn.classList.remove('active'));
   if (el) el.classList.add('active');
+  
   const lang = currentLang();
   const d = infoData[key];
-  document.getElementById('info-title').textContent = d[lang + '_title'];
-  document.getElementById('info-desc').textContent = d[lang + '_desc'];
-  const ul = document.getElementById('info-points');
+  
+  // 모달 콘텐츠 채우기
+  document.getElementById('modal-title').textContent = d[lang + '_title'];
+  document.getElementById('modal-desc').textContent = d[lang + '_desc'];
+  
+  const ul = document.getElementById('modal-points');
   ul.innerHTML = '';
   d[lang + '_points'].forEach(text => {
     const li = document.createElement('li');
     li.textContent = text;
     ul.appendChild(li);
   });
+
+  // 개인 메모 렌더링 (데이터가 있을 때만 표시)
+  const secretBox = document.getElementById('modal-secret');
+  const secretText = document.getElementById('modal-secret-text');
+  if (d[lang + '_secret']) {
+    secretText.textContent = d[lang + '_secret'];
+    secretBox.style.display = document.body.classList.contains('private') ? 'block' : 'none';
+  } else {
+    secretBox.style.display = 'none';
+  }
+
+  // 모달 띄우기
+  document.getElementById('infoModal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('infoModal').classList.remove('show');
+  document.querySelectorAll('.box').forEach(btn => btn.classList.remove('active'));
+}
+
+// 모달 외부(빈 곳) 클릭 시 닫기
+window.onclick = function(event) {
+  const modal = document.getElementById('infoModal');
+  if (event.target == modal) {
+    closeModal();
+  }
 }
 
 function openTab(evt, id) {
@@ -651,7 +697,8 @@ function openTab(evt, id) {
   document.body.classList.remove('jp', 'ko');
   document.body.classList.add(lang);
   if (params.get('private') === '1') document.body.classList.add('private');
-  showInfo('smarthr', document.querySelector('.box'));
+  
+  // 기존에는 로드 시 첫번째 설명이 고정으로 떴으나, 모달 방식이므로 초기화 시 아무것도 안 띄움
 })();
 </script>
 <footer style="text-align:center; font-size:12px; color:#9ca3af; padding:40px 0 20px; border-top:1px solid #e5e7eb;">
