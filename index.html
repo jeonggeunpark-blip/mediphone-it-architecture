@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>メディフォン株式会社 | 社内SE 応募参考資料</title>
+<style>
+/* 차분하고 신뢰감을 주는 사내 문서 스타일의 컬러 팔레트 */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-soft: #f1f5f9;
+  --line: #cbd5e1;
+  --line-strong: #94a3b8;
+  --text: #0f172a;
+  --text-soft: #334155;
+  --primary: #1e3a8a; /* 가벼운 파란색에서 묵직하고 신뢰감 있는 짙은 네이비 블루로 변경 */
+  --primary-soft: #f0f6fc;
+  --warn-bg: #fffbeb;
+  --warn-line: #fbbf24;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 헤더: 그림자 제거, 깔끔한 실선 구분 */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 32px 20px 24px;
+  text-align: center;
+}
+header h1 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+header .sub {
+  margin-top: 12px;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 네비게이션: 그림자 제거, 차분한 전환 */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+nav::-webkit-scrollbar { display: none; }
+nav { -ms-overflow-style: none; scrollbar-width: none; }
+
+nav button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+nav button:hover { 
+  color: var(--text); 
+  background-color: var(--surface-soft);
+}
+nav button.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.section {
+  display: none;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+/* 화려한 fadeIn 애니메이션 제거, 즉각적인 전환으로 문서 느낌 강조 */
+.section.active { display: block; }
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background-color: var(--primary);
+}
+
+/* 알림 박스: 웹 알림창 느낌을 줄이고 사내 메모/주의사항 포맷으로 변경 */
+.notice-box {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.notice-box strong { color: var(--text); }
+
+.summary {
+  margin: 0 0 24px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 15px;
+}
+.summary strong {
+  color: var(--text);
+  margin-right: 8px;
+  font-weight: 700;
+}
+.intro {
+  color: var(--text-soft);
+  margin-bottom: 24px;
+  font-size: 15px;
+}
+
+/* 카드: 떠오르는 애니메이션 및 그림자 제거, 플랫한 디자인 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.mini-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 20px;
+}
+.mini-card h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+.mini-card p { margin: 0; color: var(--text-soft); font-size: 14px; line-height: 1.5; }
+
+/* 튀는 형광펜 그라데이션 제거, 차분한 배경색 강조로 변경 */
+.highlight { 
+  font-weight: 700; 
+  background-color: var(--primary-soft);
+  padding: 2px 4px;
+  color: var(--primary);
+}
+.small { font-size: 13px; color: var(--text-soft); display: block; margin-top: 4px; font-weight: normal; }
+
+
+/* 아키텍처 다이어그램 */
+.arch{
+  display:flex;
+  gap:20px;
+}
+.left,.right{flex:1}
+.box{
+  border:1px solid var(--line);
+  padding:14px;
+  text-align:center;
+  margin:6px 0;
+  cursor:pointer;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+}
+.box:hover,
+.box.active{
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.box.retry{
+  border-color: var(--warn-line);
+}
+.box.retry:hover,
+.box.retry.active{
+  background: var(--warn-bg);
+}
+.arrow{text-align:center;color:#9ca3af}
+#info{
+  border-left:3px solid var(--primary);
+  padding-left:12px;
+  background: var(--surface);
+}
+#info h3{
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: var(--text);
+}
+#info p{
+  margin: 0 0 16px;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+#info ul{
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text);
+}
+#info li{
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.arch-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.arch-caption{
+  text-align:center;
+  color: var(--text-soft);
+  font-size: 13px;
+  margin: 8px 0 4px;
+}
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--line);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px;
+}
+th,td{
+  border-bottom:1px solid var(--line);
+  padding:12px;
+  font-size:14px;
+}
+th{background:#f9fafb}
+td { border-right: 1px solid var(--line); }
+td:last-child { border-right: none; }
+@media(max-width:768px){
+  .arch{flex-direction:column}
+  .arch-pair{grid-template-columns:1fr;}
+}
+
+
+/* 테이블 */
+.table-wrap {
+  margin-top: 16px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 16px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+th {
+  background: var(--surface-soft);
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+td { border-right: 1px solid var(--line); }
+td:last-child { border-right: none; }
+tr:last-child td { border-bottom: none; }
+
+.note {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.secret-note { display: none; margin-top: 20px; padding: 12px 16px; background: #fdf2f8; border: 1px solid #fbcfe8; font-size: 13px;}
+body.private .secret-note { display: block; }
+body.jp .ko { display: none !important; }
+body.ko .jp { display: none !important; }
+
+@media (max-width: 600px) {
+  header { padding: 24px 16px 16px; }
+  header h1 { font-size: 20px; }
+  .section { padding: 24px 16px 40px; }
+  h2 { font-size: 18px; }
+  .card-grid { grid-template-columns: 1fr; gap: 12px; }
+  .arch-split, .arch-support { grid-template-columns: 1fr; gap: 8px; }
+  .arch-panel { padding: 20px 16px; }
+  nav button { padding: 14px 16px; font-size: 14px; }
+  .notice-box { font-size: 14px; padding: 12px 16px; }
+  .summary { padding: 12px 16px; font-size: 14px; }
+}
+</style>
+</head>
+<body class="jp">
+<header>
+  <h1>
+    <span class="jp">メディフォン株式会社 <span class="highlight">社内SE 応募参考資料</span></span>
+    <span class="ko">메디폰 주식회사 <span class="highlight">사내 SE 지원 참고자료</span></span>
+  </h1>
+  <div class="sub">
+    <span class="jp">【フレックス】社内SE（セキュリティ・オフィス環境構築／急成長中の医療ヘルスケアSaaS）</span>
+    <span class="ko">【플렉스】사내 SE (보안·오피스 환경 구축 / 급성장 중 의료 헬스케어 SaaS)</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="openTab(event,'overview')"><span class="jp">全体像</span><span class="ko">전체 개요</span></button>
+  <button onclick="openTab(event,'architecture')"><span class="jp">構成図</span><span class="ko">구성도</span></button>
+  <button onclick="openTab(event,'compare')"><span class="jp">導入の考え方</span><span class="ko">도입 방향</span></button>
+  <button onclick="openTab(event,'risk')"><span class="jp">想定リスク</span><span class="ko">예상 리스크</span></button>
+  <button onclick="openTab(event,'plan')"><span class="jp">1年ロードマップ</span><span class="ko">1년 로드맵</span></button>
+</nav>
+
+<section id="overview" class="section active">
+  <div class="notice-box">
+    <span class="jp"><strong>※ 前提として：</strong><br>セキュリティ分野の実務経験はありませんが、<strong>昨今の開発経験を通じてセキュリティ領域に強い関心を持つようになりました。</strong>そこで、求人票の課題や要件を拝見し、現在の自分のスキルセットでどのように貢献できそうか、運用の仕組み作りという観点から自分なりに構成を考えて作成してみました。</span>
+    <span class="ko"><strong>※ 들어가며：</strong><br>보안 분야의 실무 경험은 없습니다만, <strong>최근 개발 업무를 진행하며 보안 영역에 큰 관심을 가지게 되었습니다.</strong> 이에 구인표의 과제와 요건을 보고 현재 제 스킬셋으로 어떻게 기여할 수 있을지 운영 시스템 구축 관점에서 나름대로 구성을 생각해 만들어 보았습니다.</span>
+  </div>
+
+  <h2><span class="jp">全体像</span><span class="ko">전체 개요</span></h2>
+  <p class="summary">
+    <strong><span class="jp">要約</span><span class="ko">요약</span></strong>
+    <span class="jp">人情報を起点に権限とアカウントを整備し、処理結果を記録として残す構成です。安全性と説明可能性の両立を重視しています。</span>
+    <span class="ko">사람 정보를 출발점으로 권한과 계정을 정비하고, 처리 결과를 기록으로 남기는 구조입니다. 안전성과 설명 가능성을 함께 확보하는 데 중점을 둡니다.</span>
+  </p>
+  <p class="intro">
+    <span class="jp">目的は難しい用語を並べることではなく、<span class="highlight">会社のアカウントと権限を安全に管理し、後から説明できる状態にすること</span>です。</span>
+    <span class="ko">목적은 어려운 보안 용어를 늘어놓는 것이 아니라, <span class="highlight">회사 계정과 권한을 안전하게 관리하고 나중에 설명할 수 있는 상태로 만드는 것</span>입니다.</span>
+  </p>
+  <div class="card-grid">
+    <div class="mini-card">
+      <h4>SmartHR</h4>
+      <p><span class="jp">人情報の原本。入社・退職・異動の起点です。</span><span class="ko">사람 정보의 원본. 입사·퇴사·이동의 시작점입니다.</span></p>
+    </div>
+    <div class="mini-card">
+      <h4>GAS</h4>
+      <p><span class="jp">Google Workspace を活かした自動処理エンジンです。</span><span class="ko">Google Workspace를 활용한 자동 처리 엔진입니다.</span></p>
+    </div>
+    <div class="mini-card">
+      <h4>Retry / Queue</h4>
+      <p><span class="jp">失敗時も処理を取りこぼさないための再試行設計です。</span><span class="ko">실패 시에도 처리를 놓치지 않기 위한 재시도 설계입니다.</span></p>
+    </div>
+    <div class="mini-card">
+      <h4>BigQuery / GitHub</h4>
+      <p><span class="jp">記録と変更統制を分けて、運用の透明性を高めます。</span><span class="ko">기록과 변경 통제를 분리해 운영 투명성을 높입니다.</span></p>
+    </div>
+  </div>
+  <div class="secret-note">
+    <strong><span class="jp">個人メモ</span><span class="ko">개인 메모</span></strong>
+    <div><span class="jp">「高価なツールを先に買うのではなく、まず安全に管理できる構造を作る」という説明に使う。</span><span class="ko">“비싼 툴을 먼저 사는 게 아니라, 먼저 안전하게 관리 가능한 구조를 만든다”는 설명용.</span></div>
+  </div>
+</section>
+
+<section id="architecture" class="section">
+  <h2><span class="jp">構成図</span><span class="ko">구성도</span></h2>
+  <p class="summary">
+    <strong><span class="jp">要約</span><span class="ko">요약</span></strong>
+    <span class="jp">人情報を起点に自動処理を回し、記録と変更統制を別レイヤーで持つ構成です。自動化しにくい SaaS も運用から漏れない前提にしています。</span>
+    <span class="ko">사람 정보를 기준으로 자동 처리를 돌리고, 기록과 변경 통제를 별도 레이어로 둔 구조입니다. 자동화가 어려운 SaaS도 운영에서 빠지지 않게 전제했습니다.</span>
+  </p>
+  
+  <div class="arch">
+    <div class="left">
+      <div class="box active" onclick="showInfo('smarthr', this)">SmartHR<br><span class="small"><span class="jp">人情報の原本</span><span class="ko">사람 정보 원본</span></span></div>
+      <div class="arrow">↓</div>
+      <div class="box" onclick="showInfo('gas', this)">GAS<br><span class="small"><span class="jp">自動処理エンジン</span><span class="ko">자동 처리 엔진</span></span></div>
+      <div class="arrow">↓</div>
+      <div class="box retry" onclick="showInfo('retry', this)">Retry &amp; Queue<br><span class="small"><span class="jp">失敗時の再試行</span><span class="ko">실패 시 재시도</span></span></div>
+      <div class="arrow">↓</div>
+      <div class="arch-pair">
+        <div class="box" onclick="showInfo('auto', this)">Google / Slack<br><span class="small"><span class="jp">自動処理しやすいSaaS</span><span class="ko">자동 처리 쉬운 SaaS</span></span></div>
+        <div class="box" onclick="showInfo('manual', this)">freee / HRMOS<br><span class="small"><span class="jp">手動運用が残るSaaS</span><span class="ko">수동 운영이 남는 SaaS</span></span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-caption"><span class="jp">記録・統制レイヤー</span><span class="ko">기록·통제 레이어</span></div>
+      <div class="arch-pair">
+        <div class="box" onclick="showInfo('bq', this)">BigQuery<br><span class="small"><span class="jp">ログ保存</span><span class="ko">로그 저장</span></span></div>
+        <div class="box" onclick="showInfo('github', this)">GitHub<br><span class="small"><span class="jp">変更統制</span><span class="ko">변경 통제</span></span></div>
+      </div>
+    </div>
+    <div class="right" id="info">
+      <h3 id="info-title">SmartHR</h3>
+      <p id="info-desc">人情報の原本です。入社・退職・異動などの変化はここを起点に管理します。</p>
+      <ul id="info-points">
+        <li>アカウント作成・停止の判断基準を一本化できます。</li>
+        <li>人手によるばらつきを減らし、運用説明もしやすくなります。</li>
+      </ul>
+      <div class="secret-note">
+        <strong><span class="jp">個人メモ</span><span class="ko">개인 메모</span></strong>
+        <div><span class="jp">説明時は「人情報の正本管理」を起点に話すと流れが安定する。</span><span class="ko">설명할 때는 “사람 정보의 정본 관리”를 출발점으로 말하면 흐름이 안정적.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="compare" class="section">
+  <h2><span class="jp">導入の考え方</span><span class="ko">도입 방향</span></h2>
+  <p class="summary">
+    <strong><span class="jp">要約</span><span class="ko">요약</span></strong>
+    <span class="jp">Okta を使わない方針ではなく、まず運用基盤を整え、人数増加や IPO 準備で ITGC・監査要件が重くなる段階で導入判断する考え方です。</span>
+    <span class="ko">Okta를 안 쓴다는 뜻이 아니라, 먼저 운영 기반을 정리하고 인원 증가나 IPO 준비로 ITGC·감사 요건이 무거워지는 시점에 도입을 판단한다는 방향입니다.</span>
+  </p>
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th><span class="jp">比較軸</span><span class="ko">비교축</span></th>
+        <th>Okta</th>
+        <th>Google + GAS</th>
+      </tr>
+      <tr>
+        <td><span class="jp">導入位置づけ</span><span class="ko">도입 위치</span></td>
+        <td><span class="jp">人員増加や IPO 準備で統制要件が上がる段階で有力です。</span><span class="ko">인원 증가나 IPO 준비로 통제 요건이 높아질 때 유력합니다.</span></td>
+        <td><span class="jp">初期の運用基盤づくりに向いています。</span><span class="ko">초기 운영 기반을 만드는 데 적합합니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">初期費用</span><span class="ko">초기 비용</span></td>
+        <td><span class="jp">企業向けは見積もり前提で、設計・移行工数も発生します。</span><span class="ko">기업용은 견적 문의 전제이며 설계·이행 공수도 발생합니다.</span></td>
+        <td><span class="jp">既存の Google 環境を活かせるため、追加費用より内部工数が中心です。</span><span class="ko">기존 Google 환경을 활용할 수 있어 추가 비용보다 내부 공수가 중심입니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">運用標準化</span><span class="ko">운영 표준화</span></td>
+        <td><span class="jp">高い。統合認証やライフサイクル管理を標準化しやすいです。</span><span class="ko">높음. 통합 인증과 라이프사이클 관리를 표준화하기 쉽습니다.</span></td>
+        <td><span class="jp">設計次第。柔軟ですが、内部ルール整備が前提です。</span><span class="ko">설계에 따라 다름. 유연하지만 내부 규칙 정비가 전제입니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">監査・説明性</span><span class="ko">감사·설명성</span></td>
+        <td><span class="jp">強い。権限管理や監査説明を整理しやすいです。</span><span class="ko">강함. 권한 관리와 감사 설명을 정리하기 쉽습니다.</span></td>
+        <td><span class="jp">ログと変更統制を整えれば対応可能ですが、設計品質に依存します。</span><span class="ko">로그와 변경 통제를 갖추면 대응 가능하지만 설계 품질에 좌우됩니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">立ち上げ速度</span><span class="ko">구축 속도</span></td>
+        <td><span class="jp">要件整理とベンダー調整が必要で、初動はやや重めです。</span><span class="ko">요건 정리와 벤더 조정이 필요해 초동은 다소 무겁습니다.</span></td>
+        <td><span class="jp">既存環境で小さく始めやすい構成です。</span><span class="ko">기존 환경으로 작게 시작하기 쉬운 구성입니다.</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="note">
+    <span class="jp">※ Okta は「使わない」のではなく、人数拡大・IPO 準備・ITGC 整備のタイミングで再評価する前提です。</span>
+    <span class="ko">※ Okta는 “안 쓴다”가 아니라, 인원 확대·IPO 준비·ITGC 정비 시점에 재평가하는 전제입니다.</span>
+  </div>
+</section>
+
+<section id="risk" class="section">
+  <h2><span class="jp">想定リスク</span><span class="ko">예상 리스크</span></h2>
+  <p class="summary">
+    <strong><span class="jp">要約</span><span class="ko">요약</span></strong>
+    <span class="jp">正常系だけでなく失敗や例外も拾える設計を重視しています。現実の運用で起こりやすい問題を先に整理しています。</span>
+    <span class="ko">정상 흐름뿐 아니라 실패와 예외도 잡을 수 있는 설계를 중시했습니다. 실제 운영에서 자주 생기는 문제를 먼저 정리했습니다.</span>
+  </p>
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th><span class="jp">問題</span><span class="ko">문제</span></th>
+        <th><span class="jp">想定内容</span><span class="ko">상황 설명</span></th>
+        <th><span class="jp">対応方針</span><span class="ko">대응 방침</span></th>
+      </tr>
+      <tr>
+        <td><span class="jp">退職者アカウント削除失敗</span><span class="ko">퇴사자 계정 삭제 실패</span></td>
+        <td><span class="jp">一度の失敗で不要アカウントが残る可能性があります。</span><span class="ko">한 번의 실패로 불필요 계정이 남을 수 있습니다.</span></td>
+        <td><span class="jp">再試行し、それでも失敗したものは一覧化して通知します。</span><span class="ko">재시도 후에도 실패한 항목은 목록화해 알립니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">日本SaaSの自動化限界</span><span class="ko">일본 SaaS 자동화 한계</span></td>
+        <td><span class="jp">freee や HRMOS は完全自動化しにくい場面があります。</span><span class="ko">freee나 HRMOS는 완전 자동화가 어려운 경우가 있습니다.</span></td>
+        <td><span class="jp">手動タスクとして切り出し、処理者を記録します。</span><span class="ko">수동 태스크로 분리하고 처리자를 기록합니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">権限の付けすぎ</span><span class="ko">권한 과다 부여</span></td>
+        <td><span class="jp">既存社員の権限コピーだけでは不要権限が混ざります。</span><span class="ko">기존 직원 권한 복사만으로는 불필요 권한이 섞입니다.</span></td>
+        <td><span class="jp">役割テンプレートを作り、定期見直しを行います。</span><span class="ko">역할 템플릿을 만들고 정기 점검합니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">担当者依存</span><span class="ko">담당자 의존</span></td>
+        <td><span class="jp">一人しか仕組みを知らないと、休暇や退職時に止まりやすくなります。</span><span class="ko">한 사람만 구조를 알면 휴가나 퇴사 시 운영이 멈추기 쉽습니다.</span></td>
+        <td><span class="jp">手順書とレビュー運用を残し、属人化を減らします。</span><span class="ko">절차서와 리뷰 운영을 남겨 개인 의존을 줄입니다.</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">手動迂回</span><span class="ko">수동 우회</span></td>
+        <td><span class="jp">正式フロー外の直接作業は統制を弱くします。</span><span class="ko">정식 흐름 밖 직접 작업은 통제를 약하게 만듭니다.</span></td>
+        <td><span class="jp">ログ検知と例外申請ルールを用意し、後追い可能にします。</span><span class="ko">로그 탐지와 예외 신청 규칙을 두어 사후 추적 가능하게 합니다.</span></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section id="plan" class="section">
+  <h2><span class="jp">1年ロードマップ</span><span class="ko">1년 로드맵</span></h2>
+  <p class="summary">
+    <strong><span class="jp">要約</span><span class="ko">요약</span></strong>
+    <span class="jp">基盤整備から統制強化までを段階的に進める前提です。1年の中で監査対応と次段階判断まで持っていきます。</span>
+    <span class="ko">기반 정비부터 통제 강화까지 단계적으로 진행하는 전제입니다. 1년 안에 감사 대응과 다음 단계 판단까지 가져갑니다.</span>
+  </p>
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th><span class="jp">期間</span><span class="ko">기간</span></th>
+        <th><span class="jp">主な実施内容</span><span class="ko">주요 실행 내용</span></th>
+        <th><span class="jp">狙い</span><span class="ko">목적</span></th>
+      </tr>
+      <tr>
+        <td><span class="jp">0〜30日</span><span class="ko">0~30일</span></td>
+        <td><span class="jp">SmartHR 基準統一、手動作成停止、自動化開始</span><span class="ko">SmartHR 기준 통일, 수동 생성 중단, 자동화 시작</span></td>
+        <td><span class="jp">アカウントの発生源を一本化するため</span><span class="ko">계정 발생원을 하나로 통일하기 위해</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">1〜3か月</span><span class="ko">1~3개월</span></td>
+        <td><span class="jp">Retry 設計、権限整理、ログ保存開始</span><span class="ko">Retry 설계, 권한 정리, 로그 저장 시작</span></td>
+        <td><span class="jp">失敗や例外を見逃さないため</span><span class="ko">실패와 예외를 놓치지 않기 위해</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">3〜6か月</span><span class="ko">3~6개월</span></td>
+        <td><span class="jp">MFA 強化、端末統制、コード変更承認の整備</span><span class="ko">MFA 강화, 단말 통제, 코드 변경 승인 정비</span></td>
+        <td><span class="jp">誰でも入れる・変えられる状態をなくすため</span><span class="ko">아무나 들어오고 바꾸는 상태를 막기 위해</span></td>
+      </tr>
+      <tr>
+        <td><span class="jp">6〜12か月</span><span class="ko">6~12개월</span></td>
+        <td><span class="jp">模擬監査、ログレビュー、Okta / 国内IdP 再評価</span><span class="ko">모의 감사, 로그 리뷰, Okta/일본 IdP 재평가</span></td>
+        <td><span class="jp">監査対応力を上げ、次段階を判断するため</span><span class="ko">감사 대응력을 높이고 다음 단계를 판단하기 위해</span></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<script>
+const infoData = {
+  smarthr: {
+    jp_title: 'SmartHR',
+    ko_title: 'SmartHR',
+    jp_desc: '人情報の原本です。入社・退職・異動などの変化はここを起点に管理します。',
+    ko_desc: '사람 정보의 원본입니다. 입사·퇴사·이동 같은 변화는 여기에서 시작합니다.',
+    jp_points: [
+      'アカウント作成・停止の判断基準を一本化できます。',
+      '人手によるばらつきを減らし、運用説明もしやすくなります。'
+    ],
+    ko_points: [
+      '계정 생성·중지 판단 기준을 하나로 통일할 수 있습니다.',
+      '사람마다 다르게 처리되는 편차를 줄이고 설명도 쉬워집니다.'
+    ]
+  },
+  gas: {
+    jp_title: 'GAS', ko_title: 'GAS',
+    jp_desc: 'SmartHR の情報を受けて Google や Slack の処理を自動で動かすエンジンです。',
+    ko_desc: 'SmartHR 정보를 받아 Google과 Slack 처리를 자동으로 움직이는 엔진입니다.',
+    jp_points: ['既存の Google Workspace を活かして小さく始められます。', '入社・退職・異動の定型処理を減らせます。'],
+    ko_points: ['기존 Google Workspace를 활용해 작게 시작할 수 있습니다.', '입사·퇴사·이동의 정형 작업을 줄일 수 있습니다.']
+  },
+  retry: {
+    jp_title: 'Retry & Queue', ko_title: 'Retry & Queue',
+    jp_desc: '失敗した処理をそのまま終わらせず、再試行して取りこぼしを防ぐ仕組みです。',
+    ko_desc: '실패한 처리를 그대로 끝내지 않고 재시도해 누락을 막는 구조입니다.',
+    jp_points: ['一時的なエラーで退職者アカウントが残る事態を減らします。', '再試行後も失敗したものだけを人が確認できます。'],
+    ko_points: ['일시 오류 때문에 퇴사자 계정이 남는 상황을 줄입니다.', '재시도 후에도 실패한 항목만 사람이 확인하면 됩니다.']
+  },
+  auto: {
+    jp_title: 'Google / Slack', ko_title: 'Google / Slack',
+    jp_desc: '自動処理と相性が良い SaaS 群です。アカウント停止や権限更新を流し込みやすい領域です。',
+    ko_desc: '자동 처리와 궁합이 좋은 SaaS 영역입니다. 계정 중지와 권한 갱신을 흘려보내기 쉽습니다.',
+    jp_points: ['ライフサイクル管理の自動化効果が出やすい部分です。', 'Google Workspace 中心の環境と整合しやすいです。'],
+    ko_points: ['라이프사이클 관리 자동화 효과가 잘 나는 부분입니다.', 'Google Workspace 중심 환경과 잘 맞습니다.']
+  },
+  manual: {
+    jp_title: 'freee / HRMOS', ko_title: 'freee / HRMOS',
+    jp_desc: '完全自動化が難しい場面が残る SaaS です。運用タスクとして切り出す前提が必要です。',
+    ko_desc: '완전 자동화가 어려운 장면이 남는 SaaS입니다. 운영 태스크로 분리하는 전제가 필요합니다.',
+    jp_points: ['例外を無理に自動化せず、誰가処理したかを残します。', '自動化できない部分も統制対象として管理できます。'],
+    ko_points: ['예외를 무리하게 자동화하지 않고, 누가 처리했는지 남깁니다.', '자동화되지 않는 부분도 통제 대상 안에서 관리할 수 있습니다.']
+  },
+  bq: {
+    jp_title: 'BigQuery', ko_title: 'BigQuery',
+    jp_desc: '誰がいつ何をしたかを残すログ保管先です。後から追える状態を作ります。',
+    ko_desc: '누가 언제 무엇을 했는지 남기는 로그 저장소입니다. 나중에 추적 가능한 상태를 만듭니다.',
+    jp_points: ['監査・セキュリティ説明・障害調査で役立ちます。', '運用を人の記憶ではなく記録で説明できます。'],
+    ko_points: ['감사·보안 설명·장애 조사에 도움이 됩니다.', '사람 기억이 아니라 기록으로 운영을 설명할 수 있습니다.']
+  },
+  github: {
+    jp_title: 'GitHub', ko_title: 'GitHub',
+    jp_desc: '自動化コードや設定変更を一人の判断だけで進めないための変更統制レイヤーです。',
+    ko_desc: '자동화 코드와 설정 변경을 한 사람 판단만으로 진행하지 않기 위한 변경 통제 레이어입니다.',
+    jp_points: ['レビューを通して属人化と誤変更を減らせます。', '運用フローとは別に変更理由を残しやすくなります。'],
+    ko_points: ['리뷰를 통해 개인 의존과 오변경을 줄일 수 있습니다.', '운영 흐름과 별개로 변경 이유를 남기기 쉬워집니다.']
+  }
+};
+
+function currentLang() {
+  return document.body.classList.contains('ko') ? 'ko' : 'jp';
+}
+
+function showInfo(key, el) {
+  document.querySelectorAll('.box').forEach(btn => btn.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const lang = currentLang();
+  const d = infoData[key];
+  document.getElementById('info-title').textContent = d[lang + '_title'];
+  document.getElementById('info-desc').textContent = d[lang + '_desc'];
+  const ul = document.getElementById('info-points');
+  ul.innerHTML = '';
+  d[lang + '_points'].forEach(text => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+}
+
+function openTab(evt, id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+
+(function init() {
+  const params = new URLSearchParams(location.search);
+  const lang = params.get('lang') === 'ko' ? 'ko' : 'jp';
+  document.body.classList.remove('jp', 'ko');
+  document.body.classList.add(lang);
+  if (params.get('private') === '1') document.body.classList.add('private');
+  showInfo('smarthr', document.querySelector('.box'));
+})();
+</script>
+<footer style="text-align:center; font-size:12px; color:#9ca3af; padding:40px 0 20px; border-top:1px solid #e5e7eb;">
+  本資料は、ポジション理解を深めるために整理した補足資料です。<br>
+  Jeonggeun Park（朴正根）
+</footer>
+</body>
+</html>
